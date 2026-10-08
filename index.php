@@ -1,5 +1,5 @@
 <?php
-    $fisiere = scandir("audio");
+$fisiere = scandir("audio");
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MP3 Player</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100 min-h-screen">
@@ -64,21 +65,36 @@
             $existaFisier = false;
 
             foreach ($fisiere as $fisier) {
+
                 $extensie = strtolower(pathinfo($fisier, PATHINFO_EXTENSION));
 
                 if ($extensie === "mp3") {
+
                     $existaFisier = true;
                     ?>
 
                     <div class="border border-gray-200 rounded-lg p-4 mb-4">
 
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">
                             <?php echo htmlspecialchars($fisier); ?>
                         </h3>
 
-                        <audio controls class="w-full">
-                            <source src="audio/<?php echo rawurlencode($fisier); ?>" type="audio/mpeg">
+                        <p class="text-sm text-gray-500 mb-3">
+                            Durata: <span class="durata">Se calculează...</span>
+                        </p>
+
+                        <audio controls class="w-full player">
+                            <source
+                                src="audio/<?php echo rawurlencode($fisier); ?>"
+                                type="audio/mpeg"
+                            >
                         </audio>
+                        <a
+                            href="download.php?fisier=<?php echo rawurlencode($fisier); ?>"
+                            class="inline-block mt-3 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg"
+                        >
+                            Descarcă
+                        </a>
 
                     </div>
 
@@ -94,5 +110,29 @@
         </div>
 
     </div>
+
+    <script>
+        const playere = document.querySelectorAll(".player");
+
+        playere.forEach(function(player) {
+
+            player.addEventListener("loadedmetadata", function() {
+
+                const durata = Math.floor(player.duration);
+                const minute = Math.floor(durata / 60);
+                const secunde = durata % 60;
+
+                let secundeAfisate = secunde;
+
+                if (secunde < 10) {
+                    secundeAfisate = "0" + secunde;
+                }
+
+                player.parentElement.querySelector(".durata").textContent =
+                    minute + ":" + secundeAfisate;
+            });
+
+        });
+    </script>
 </body>
 </html>
