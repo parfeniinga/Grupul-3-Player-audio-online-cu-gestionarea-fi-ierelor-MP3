@@ -1,3 +1,7 @@
+<?php
+    $fisiere = scandir("audio");
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -56,13 +60,39 @@
                 Fișiere audio
             </h2>
 
-            <p class="text-gray-500">
-                Nu există încă fișiere audio.
-            </p>
+            <?php
+            $existaFisier = false;
+
+            foreach ($fisiere as $fisier) {
+                $extensie = strtolower(pathinfo($fisier, PATHINFO_EXTENSION));
+
+                if ($extensie === "mp3") {
+                    $existaFisier = true;
+                    ?>
+
+                    <div class="border border-gray-200 rounded-lg p-4 mb-4">
+
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                            <?php echo htmlspecialchars($fisier); ?>
+                        </h3>
+
+                        <audio controls class="w-full">
+                            <source src="audio/<?php echo rawurlencode($fisier); ?>" type="audio/mpeg">
+                        </audio>
+
+                    </div>
+
+                    <?php
+                }
+            }
+
+            if (!$existaFisier) {
+                echo '<p class="text-gray-500">Nu există încă fișiere audio.</p>';
+            }
+            ?>
 
         </div>
 
     </div>
-
 </body>
 </html>
