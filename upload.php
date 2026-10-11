@@ -1,39 +1,48 @@
+
 <?php
-    if (!isset($_FILES["fisier"])) {
+    if (!isset($_FILES["fisiere"])) {
         header("Location: index.php");
         exit;
     }
 
-    $fisier = $_FILES["fisier"];
+    $fisiere = $_FILES["fisiere"];
 
-    if ($fisier["error"] !== UPLOAD_ERR_OK) {
-        header("Location: index.php");
-        exit;
+    if (!is_dir("audio")) {
+        mkdir("audio", 0755, true);
     }
 
-    if ($fisier["size"] > 10 * 1024 * 1024) {
-        header("Location: index.php");
-        exit;
-    }
+    $total = count($fisiere["name"]);
 
-    $nume = basename($fisier["name"]);
-    $extensie = strtolower(pathinfo($nume, PATHINFO_EXTENSION));
+    for ($i = 0; $i < $total; $i++) {
+        if ($fisiere["error"][$i] !== UPLOAD_ERR_OK) {
+            continue;
+        }
 
-    if ($extensie !== "mp3") {
-        header("Location: index.php");
-        exit;
-    }
+        if ($fisiere["size"][$i] <= 0 || $fisiere["size"][$i] > 10 * 1024 * 1024) {
+            continue;
+        }
 
-    $cale = "audio/" . $nume;
+        if (!is_uploaded_file($fisiere["tmp_name"][$i])) {
+            continue;
+        }
 
-    if (file_exists($cale)) {
-        header("Location: index.php");
-        exit;
-    }
+        $numeOriginal = basename($fisiere["name"][$i]);
+        $extensie = strtolower(pathinfo($numeOriginal, PATHINFO_EXTENSION));
 
-    if (move_uploaded_file($fisier["tmp_name"], $cale)) {
-        header("Location: index.php");
-        exit;
+        if ($extensie !== "mp3") {
+            continue;
+        }
+
+        $tip = mime_content_type($fisiere["tmp_name"][$i]);
+
+        if ($tip !== "audio/mpeg" && $tip !== "audio/mp3" && $tip !== "application/octet-stream") {
+            continue;
+        }
+
+        $nume = uniqid("melodie_", true) . ".mp3";
+        $cale = "audio/" . $nume;
+
+        move_uploaded_file($fisiere["tmp_name"][$i], $cale);
     }
 
     header("Location: index.php");

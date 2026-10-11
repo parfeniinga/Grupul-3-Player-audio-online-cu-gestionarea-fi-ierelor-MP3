@@ -45,6 +45,7 @@ $fisiere = scandir("audio");
                     name="fisier"
                     accept=".mp3,audio/mpeg"
                     class="block w-full border border-gray-300 rounded-lg p-3 mb-4"
+                    multiple
                     required
                 >
 
