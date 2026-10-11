@@ -23,6 +23,14 @@ $fisiere = scandir("audio");
         <p class="text-center text-gray-600 mb-8">
             Player audio online
         </p>
+        <div class="text-center mb-8">
+            <a
+                href="playlist.php"
+                class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
+            >
+                Deschide playlist-ul
+            </a>
+        </div>
 
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
 
@@ -95,13 +103,13 @@ $fisiere = scandir("audio");
                         >
                             Descarcă
                         </a>
-                        <a
+                        <button
                             href="delete.php?fisier=<?php echo rawurlencode($fisier); ?>"
                             class="inline-block mt-3 bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg"
                             onclick="return confirm('Sigur vrei sa stergi acest fisier?');"
                         >
                             Șterge
-                        </a>
+                        </button>
                     </div>
 
                     <?php
