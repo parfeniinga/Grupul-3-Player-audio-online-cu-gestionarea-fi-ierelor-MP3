@@ -1,14 +1,15 @@
-<?php
 
-    if (!isset($_GET["fisier"])) {
+<?php
+    if ($_SERVER["REQUEST_METHOD"] !== "POST" || !isset($_POST["fisier"])) {
         header("Location: index.php");
         exit;
     }
 
-    $nume = basename($_GET["fisier"]);
+    $nume = basename($_POST["fisier"]);
+    $extensie = strtolower(pathinfo($nume, PATHINFO_EXTENSION));
     $cale = "audio/" . $nume;
 
-    if (file_exists($cale)) {
+    if ($extensie === "mp3" && is_file($cale) && !is_link($cale)) {
         unlink($cale);
     }
 

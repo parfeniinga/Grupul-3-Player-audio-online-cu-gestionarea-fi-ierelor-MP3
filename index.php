@@ -104,15 +104,14 @@ $fisiere = scandir("audio");
                         >
                             Descarcă
                         </a>
-                        <button
-                            href="delete.php?fisier=<?php echo rawurlencode($fisier); ?>"
-                            class="inline-block mt-3 bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg"
-                            onclick="return confirm('Sigur vrei sa stergi acest fisier?');"
-                        >
-                            Șterge
-                        </button>
+                        
+                        <form action="delete.php" method="POST" onsubmit="return confirm('Sigur vrei sa stergi acest fisier?');">
+                            <input type="hidden" name="fisier" value="<?php echo htmlspecialchars($fisier, ENT_QUOTES, 'UTF-8'); ?>">
+                            <button type="submit" class="mt-3 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700">
+                                Sterge
+                            </button>
+                        </form>
                     </div>
-
                     <?php
                 }
             }
