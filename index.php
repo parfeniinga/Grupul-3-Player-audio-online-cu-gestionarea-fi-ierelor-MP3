@@ -23,14 +23,7 @@ $fisiere = scandir("audio");
         <p class="text-center text-gray-600 mb-8">
             Player audio online
         </p>
-        <div class="text-center mb-8">
-            <a
-                href= "list.php"
-                class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
-            >
-                Deschide lista
-            </a>
-        </div>
+
 
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
 
@@ -69,7 +62,6 @@ $fisiere = scandir("audio");
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">
                 Fișiere audio
             </h2>
-
             <?php
             $existaFisier = false;
 
@@ -148,5 +140,13 @@ $fisiere = scandir("audio");
 
         });
     </script>
+            <div class="text-center mb-8">
+                <a
+                    href= "lista.php"
+                    class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
+                >
+                    Deschide lista
+                </a>
+            </div>
 </body>
 </html>
