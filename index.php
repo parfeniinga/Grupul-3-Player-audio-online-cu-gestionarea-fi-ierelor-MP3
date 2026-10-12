@@ -9,7 +9,7 @@ $fisiere = scandir("audio");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MP3 Player</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="bg-gray-100 min-h-screen">
@@ -25,10 +25,10 @@ $fisiere = scandir("audio");
         </p>
         <div class="text-center mb-8">
             <a
-                href="playlist.php"
+                href= "list.php"
                 class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
             >
-                Deschide playlist-ul
+                Deschide lista
             </a>
         </div>
 
