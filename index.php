@@ -15,9 +15,9 @@ $fisiere = scandir("audio");
 
 <body class="bg-gray-100 min-h-screen">
 
-    <div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="w-full max-w-5xl mx-auto px-3 sm:px-4 py-5 sm:py-8">
 
-        <h1 class="text-4xl font-bold text-center text-gray-800 mb-2">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800 mb-2">
             MP3 Player
         </h1>
 
@@ -25,7 +25,7 @@ $fisiere = scandir("audio");
             Player audio online
         </p>
 
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
 
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">
                 Încarcă un fișier MP3
@@ -35,7 +35,7 @@ $fisiere = scandir("audio");
 
                 <input
                     type="file"
-                    name="fisier[]"
+                    name="fisiere[]"
                     accept=".mp3,audio/mpeg"
                     class="block w-full border border-gray-300 rounded-lg p-3 mb-4 bg-white text-gray-800"
                     multiple
