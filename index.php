@@ -4,6 +4,7 @@ $fisiere = scandir("audio");
 
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,6 @@ $fisiere = scandir("audio");
             Player audio online
         </p>
 
-
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
 
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">
@@ -35,9 +35,9 @@ $fisiere = scandir("audio");
 
                 <input
                     type="file"
-                    name="fisier"
+                    name="fisier[]"
                     accept=".mp3,audio/mpeg"
-                    class="block w-full border border-gray-300 rounded-lg p-3 mb-4"
+                    class="block w-full border border-gray-300 rounded-lg p-3 mb-4 bg-white text-gray-800"
                     multiple
                     required
                 >
@@ -62,6 +62,7 @@ $fisiere = scandir("audio");
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">
                 Fișiere audio
             </h2>
+
             <?php
             $existaFisier = false;
 
@@ -69,41 +70,64 @@ $fisiere = scandir("audio");
 
                 $extensie = strtolower(pathinfo($fisier, PATHINFO_EXTENSION));
 
-                if ($extensie === "mp3") {
+                if ($extensie === "mp3" && is_file("audio/" . $fisier)) {
 
                     $existaFisier = true;
+                    $dimensiune = round(filesize("audio/" . $fisier) / (1024 * 1024), 2);
                     ?>
 
                     <div class="border border-gray-200 rounded-lg p-4 mb-4">
 
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">
-                            <?php echo htmlspecialchars($fisier); ?>
+                            <?php echo htmlspecialchars($fisier, ENT_QUOTES, 'UTF-8'); ?>
                         </h3>
 
                         <p class="text-sm text-gray-500 mb-3">
                             Durata: <span class="durata">Se calculează...</span>
+                            <span class="mx-2">|</span>
+                            Dimensiune: <?php echo $dimensiune; ?> MB
                         </p>
 
-                        <audio controls class="w-full player">
+                        <audio controls preload="metadata" class="w-full player">
                             <source
                                 src="audio/<?php echo rawurlencode($fisier); ?>"
                                 type="audio/mpeg"
                             >
+                            Browserul tău nu acceptă redarea audio.
                         </audio>
-                        <a
-                            href="download.php?fisier=<?php echo rawurlencode($fisier); ?>"
-                            class="inline-block mt-3 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg"
-                        >
-                            Descarcă
-                        </a>
-                        
-                        <form action="delete.php" method="POST" onsubmit="return confirm('Sigur vrei sa stergi acest fisier?');">
-                            <input type="hidden" name="fisier" value="<?php echo htmlspecialchars($fisier, ENT_QUOTES, 'UTF-8'); ?>">
-                            <button type="submit" class="mt-3 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700">
-                                Sterge
-                            </button>
-                        </form>
+
+                        <div class="flex flex-wrap items-center gap-3 mt-3">
+
+                            <a
+                                href="download.php?fisier=<?php echo rawurlencode($fisier); ?>"
+                                class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg"
+                            >
+                                Descarcă
+                            </a>
+
+                            <form
+                                action="delete.php"
+                                method="POST"
+                                onsubmit="return confirm('Sigur vrei sa stergi acest fisier?');"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="fisier"
+                                    value="<?php echo htmlspecialchars($fisier, ENT_QUOTES, 'UTF-8'); ?>"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
+                                >
+                                    Șterge
+                                </button>
+                            </form>
+
+                        </div>
+
                     </div>
+
                     <?php
                 }
             }
@@ -113,6 +137,15 @@ $fisiere = scandir("audio");
             }
             ?>
 
+        </div>
+
+        <div class="text-center mt-8 mb-8">
+            <a
+                href="lista.php"
+                class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
+            >
+                Deschide lista
+            </a>
         </div>
 
     </div>
@@ -140,13 +173,6 @@ $fisiere = scandir("audio");
 
         });
     </script>
-            <div class="text-center mb-8">
-                <a
-                    href= "lista.php"
-                    class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg"
-                >
-                    Deschide lista
-                </a>
-            </div>
+
 </body>
 </html>
