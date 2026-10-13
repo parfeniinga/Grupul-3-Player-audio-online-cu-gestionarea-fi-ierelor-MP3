@@ -39,9 +39,14 @@
             continue;
         }
 
-        $nume = uniqid("melodie_", true) . ".mp3";
+        $nume = $numeOriginal;
         $cale = "audio/" . $nume;
 
+        if (file_exists($cale)) {
+            continue;
+        }
+
+        move_uploaded_file($fisiere["tmp_name"][$i], $cale);
         move_uploaded_file($fisiere["tmp_name"][$i], $cale);
     }
 
